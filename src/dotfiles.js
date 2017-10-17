@@ -1,7 +1,7 @@
 const fs = require('fs-extra')
 const { task } = require('folktale/concurrency/task');
 
-function cp(){
+function cp(a){
   return task(resolver => {
     fs.copy('dotfiles', 'packblade/roles/dotfiles/files/')
       .then(() => resolver.resolve('Files copied'))

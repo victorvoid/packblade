@@ -35,12 +35,8 @@ const spinner = ora('Loading... \n').start();
 
 const app = dotfile
   .exist()
-  .map(template.load)
-  .map(dotfile.cp)
-  .orElse((errorMessage) => {
-    spinner.fail(errorMessage)
-    return rejected(errorMessage)
-  })
+  .and(template.load())
+  .and(dotfile.cp())
 
 app
   .run()
@@ -51,6 +47,7 @@ app
       $ lookhere install
     `)
   })
-  .catch(() => {
+  .catch((errorMessage) => {
+    spinner.fail(errorMessage)
     cli.showHelp()
   })
