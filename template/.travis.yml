@@ -1,0 +1,17 @@
+---
+language: python
+python: "2.7"
+before_install:
+ - sudo apt-get update -qq
+ - sudo apt-get install -qq python-apt python-pycurl ca-certificates
+install:
+  - pip install ansible
+  - pip install urllib3
+  - pip install pyopenssl
+  - pip install ndg-httpsclient
+  - pip install pyasn1
+  - ansible --version
+script:
+  - echo localhost > inventory
+  - ansible-playbook -i inventory --syntax-check --extra-vars="git_user_email=travis_email" --extra-vars="git_user_name=travis_user" --extra-vars="travis=true" --list-tasks linux.yml
+  - ansible-playbook -i inventory --connection=local --sudo --extra-vars="git_user_email=travis_email" --extra-vars="git_user_name=travis_user" --extra-vars="travis=true" linux.yml

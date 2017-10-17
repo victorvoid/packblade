@@ -1,0 +1,21 @@
+---
+- hosts: localhost
+  vars_prompt:
+    - name: "git_user_email"
+      prompt: "what is your git email?"
+      default: "victor.0w3@gmail.com"
+      private: no
+    - name: "git_user_name"
+      prompt: "what is your git user?"
+      default: "Victor Igor"
+      private: no
+
+  roles:
+    - { role: dotfiles, tags: ['dotfiles'] }
+    - { role: defaults }
+    - { role: spotify, tags: ['spotify'] }
+    - { role: telegram, tags: ['telegram'] }
+    - { role: docker, tags: ['docker']}
+  vars:
+    command_t_bundle: ext.so
+    use_local_vim_dir: true
