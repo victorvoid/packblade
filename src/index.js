@@ -1,6 +1,7 @@
 #!/usr/bin/env node
 
 const meow = require('meow')
+const updateNotifier = require('update-notifier')
 
 const cli = meow(
   `
