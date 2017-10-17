@@ -1,15 +1,16 @@
 #!/usr/bin/env node
 
 const meow = require('meow')
+const ora = require('ora');
 const updateNotifier = require('update-notifier')
 const template = require('./template')
 const dotfile = require('./dotfiles')
-const fs = require('fs-extra')
-const { of } = require('folktale/concurrency/task');
+const { rejected } = require('folktale/concurrency/task');
+
+
 const cli = meow({
   description: false,
-  help:
-  `
+  help: `
     Usage:
       $ lookhere                Get yours files/dotfiles in current path and generate a role with files
       $ lookhere install        Install your apps and create the symbolic links for yours dotfiles
@@ -21,18 +22,35 @@ const cli = meow({
       $ lookhere ls
   `
 },
-                 {
-                   alias: {
-                     h: 'help',
-                     v: 'version'
-                   }
-                 }
-                )
+  {
+    alias: {
+      h: 'help',
+      v: 'version'
+    }
+  }
+)
 
 updateNotifier({ pkg: cli.pkg }).notify()
+const spinner = ora('Loading... \n').start();
 
 const app = dotfile
-      .exist()
-      .map(template.load)
+  .exist()
+  .map(template.load)
+  .map(dotfile.cp)
+  .orElse((errorMessage) => {
+    spinner.fail(errorMessage)
+    return rejected(errorMessage)
+  })
 
-app.run()
+app
+  .run()
+  .promise()
+  .then(() => {
+    spinner.succeed(`
+      Success! Now you can enter the folder lookhere/ and install with:
+      $ lookhere install
+    `)
+  })
+  .catch(() => {
+    cli.showHelp()
+  })
