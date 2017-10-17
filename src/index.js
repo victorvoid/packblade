@@ -12,14 +12,14 @@ const cli = meow({
   description: false,
   help: `
     Usage:
-      $ lookhere                Get yours files/dotfiles in current path and generate a role with files
-      $ lookhere install        Install your apps and create the symbolic links for yours dotfiles
-      $ lookhere <appname>      Generate a role of the app
-      $ lookhere ls             Show availables roles(Applications)
+      $ packblade                Get yours files/dotfiles in current path and generate a role with files
+      $ packblade install        Install your apps and create the symbolic links for yours dotfiles
+      $ packblade <appname>      Generate a role of the app
+      $ packblade ls             Show availables roles(Applications)
     Example:
-      $ lookhere
-      $ lookhere spotify
-      $ lookhere ls
+      $ packblade
+      $ packblade spotify
+      $ packblade ls
   `
 },
   {
@@ -47,7 +47,7 @@ app
   .promise()
   .then(() => {
     spinner.succeed(`
-      Success! Now you can enter the folder lookhere/ and install with:
+      Success! Now you can enter the folder packblade/ and install with:
       $ lookhere install
     `)
   })
