@@ -4,9 +4,12 @@ const { task } = require('folktale/concurrency/task');
 
 function load(){
   return task((resolver) => {
-    fs.copy(path.resolve(__dirname, '../template/dotfiles'), 'packblade/roles/dotfiles/')
+    fs.copy(path.resolve(__dirname, '../template/'), 'packblade/')
       .then(() => {
-        resolver.resolve('ewkj')
+        resolver.resolve('')
+      })
+      .catch(() => {
+        resolver.reject('An unexpected error occurred')
       })
   })
 }

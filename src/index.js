@@ -5,8 +5,6 @@ const ora = require('ora');
 const updateNotifier = require('update-notifier')
 const template = require('./template')
 const dotfile = require('./dotfiles')
-const { rejected } = require('folktale/concurrency/task');
-
 
 const cli = meow({
   description: false,
@@ -44,7 +42,7 @@ app
   .then(() => {
     spinner.succeed(`
       Success! Now you can enter the folder packblade/ and install with:
-      $ lookhere install
+      $ packblade install
     `)
   })
   .catch((errorMessage) => {
