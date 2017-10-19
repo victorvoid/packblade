@@ -9,15 +9,14 @@ const dotfile = require('./dotfiles')
 const cli = meow({
   description: false,
   help: `
-    Usage:
-      $ packblade                Get yours files/dotfiles in current path and generate a role with files
-      $ packblade install        Install your apps and create the symbolic links for yours dotfiles
-      $ packblade <appname>      Generate a role of the app
-      $ packblade ls             Show availables roles(Applications)
+    Usage: packblade <command>
+    Where <command> is one of:
+      build            Generates its ready to use package
+      add <appname>    Add a role(app) to the your package
+      ls               Show availables roles(Applications)
     Example:
-      $ packblade
-      $ packblade spotify
-      $ packblade ls
+      $ packblade add spotify
+      $ packblade build
   `
 },
   {
@@ -31,21 +30,26 @@ const cli = meow({
 updateNotifier({ pkg: cli.pkg }).notify()
 const spinner = ora('Loading... \n').start();
 
-const app = dotfile
-  .exist()
-  .and(template.load())
-  .and(dotfile.cp())
+if(cli.input[0] === 'build'){
+  const app = dotfile
+    .exist()
+    .and(template.load())
+    .and(dotfile.cp())
 
-app
-  .run()
-  .promise()
-  .then(() => {
-    spinner.succeed(`
-      Success! Now you can enter the folder packblade/ and install with:
-      $ packblade install
-    `)
-  })
-  .catch((errorMessage) => {
-    spinner.fail(errorMessage)
-    cli.showHelp()
-  })
+  app
+    .run()
+    .promise()
+    .then(() => {
+      spinner.succeed(`
+        Success! Now you can enter the folder packblade/ and install with:
+        $ packblade install
+      `)
+    })
+    .catch((errorMessage) => {
+      spinner.fail(errorMessage)
+      cli.showHelp()
+    })
+}else{
+  spinner.fail('An unexpected error occurred, you need to use:')
+  cli.showHelp()
+}
