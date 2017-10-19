@@ -1,16 +1,24 @@
 const union = require('folktale/adt/union/union');
 
 const CLITypes = union('CLICheck', {
-  build(value){
-    return { value };
+  Build(){
+    return {}
   },
 
-  add(value) {
-    return { value };
+  Add() {
+    return {}
   },
 
-  ls(value) {
-    return { value };
+  Install(){
+    return {}
+  },
+
+  Show(value) {
+    return {}
+  },
+
+  NotExist() {
+    return {}
   }
 });
 
