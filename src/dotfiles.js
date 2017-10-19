@@ -1,23 +1,18 @@
 const fs = require('fs-extra')
-const { task } = require('folktale/concurrency/task');
+const { fromPromised, rejected, of } = require('folktale/concurrency/task');
+
+const fsCopy = fromPromised(fs.copy)
+const pathExists = fromPromised(fs.pathExists)
 
 function cp(a){
-  return task(resolver => {
-    fs.copy('dotfiles', 'packblade/roles/dotfiles/files/')
-      .then(() => resolver.resolve('Files copied'))
-      .catch(err => resolver.reject(err))
-  })
+  return fsCopy('dotfiles', 'packblade/roles/dotfiles/files/')
 }
 
 function exist(){
-  return task(resolver => {
-    fs.pathExists('dotfiles')
-      .then(exist => {
-        return exist ?
-          resolver.resolve(exist) :
-          resolver.reject(`You need create a dotfiles/ folder and put your files`)
-      })
-  })
+  return pathExists('dotfiles')
+    .chain(exist => {
+      return exist ? of(exist) : rejected(`You need create a dotfiles/ folder and put your files`)
+    })
 }
 
 module.exports = {

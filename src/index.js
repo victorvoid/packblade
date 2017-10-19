@@ -34,22 +34,21 @@ if(cli.input[0] === 'build'){
   const app = dotfiles
     .exist()
     .and(template.load())
-    .and(dotfile.cp())
+    .and(dotfiles.cp())
 
   app
     .run()
     .promise()
     .then(() => {
       spinner.succeed(`
-        Success! Now you can enter the folder packblade/ and install with:
-        $ packblade install
+        Success! generated in the ./packblade/
       `)
     })
     .catch((errorMessage) => {
-      spinner.fail(errorMessage)
+      spinner.fail(`[ERROR] ${errorMessage}`)
       cli.showHelp()
     })
 }else{
-  spinner.fail('An unexpected error occurred, you need to use:')
+  spinner.fail('[ERROR] An unexpected error occurred, you need to use:')
   cli.showHelp()
 }

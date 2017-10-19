@@ -1,17 +1,14 @@
 const fs = require('fs-extra')
 const path = require('path')
-const { task } = require('folktale/concurrency/task');
+const { fromPromised, rejected } = require('folktale/concurrency/task');
+
+const fsCopy = fromPromised(fs.copy)
 
 function load(){
-  return task((resolver) => {
-    fs.copy(path.resolve(__dirname, '../template/'), 'packblade/')
-      .then(() => {
-        resolver.resolve('')
-      })
-      .catch(() => {
-        resolver.reject('An unexpected error occurred')
-      })
-  })
+  return fsCopy(path.resolve(__dirname, '../template/'), 'packblade/')
+    .orElse(() => {
+      return rejected('An unexpected error occurred')
+    })
 }
 
 module.exports = {
