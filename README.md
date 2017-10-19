@@ -10,7 +10,7 @@ Getting started
 Install packblade with npm:
 
 ```sh
-$ npm install packblade
+working...
 ```
 
 ## How to generate my automated folder?
