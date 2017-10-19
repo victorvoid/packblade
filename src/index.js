@@ -4,7 +4,7 @@ const meow = require('meow')
 const ora = require('ora');
 const updateNotifier = require('update-notifier')
 const template = require('./template')
-const dotfile = require('./dotfiles')
+const dotfiles = require('./dotfiles')
 
 const cli = meow({
   description: false,
@@ -31,7 +31,7 @@ updateNotifier({ pkg: cli.pkg }).notify()
 const spinner = ora('Loading... \n').start();
 
 if(cli.input[0] === 'build'){
-  const app = dotfile
+  const app = dotfiles
     .exist()
     .and(template.load())
     .and(dotfile.cp())
