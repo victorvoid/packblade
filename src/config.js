@@ -6,7 +6,7 @@ const readJson = fromPromised(fs.readJson)
 function read(){
   return readJson('./packblade.json')
     .orElse(() => {
-      return rejected(`Packblade file not found: ./packblade.json`)
+      return rejected(` Packblade: file not found: ./packblade.json`)
     })
 }
 

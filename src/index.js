@@ -3,7 +3,7 @@
 const meow = require('meow')
 const ora = require('ora');
 const updateNotifier = require('update-notifier')
-const Build = require('./build')
+const Add = require('./add')
 const { rejected } = require('folktale/concurrency/task');
 const { checkParameters } = require('./utils')
 
@@ -12,12 +12,13 @@ const cli = meow({
   help: `
     Usage: packblade <command>
     Where <command> is one of:
-      build               Generates its ready to use package
-      add     <filename>  Add a file or folder to the your package
       install <appname>   Add a role(app) to the your package
+      add     <foldername>  Add a file or folder to the your package
       show                Show availables roles(Applications)
+      build               Generates its ready to use package
     Example:
-      $ packblade add spotify
+      $ packblade install spotify
+      $ packblade add dotfiles
       $ packblade build
   `
 },
@@ -33,9 +34,9 @@ updateNotifier({ pkg: cli.pkg }).notify()
 const spinner = ora('Loading... \n').start();
 
 const app = checkParameters(cli.input[0]).matchWith({
-  Build,
+  Add: () => Add(cli.input[1]),
 
-  NotExist: () => rejected('[ERROR] An unexpected error occurred, you need to use:')
+  NotExist: () => rejected('An unexpected error occurred, you need to use:')
 })
 
 app

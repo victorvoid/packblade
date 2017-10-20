@@ -1,11 +1,5 @@
-const dotfiles = require('./dotfiles')
-const template = require('./template')
-
 function Build(){
-  return dotfiles
-    .exist()
-    .and(template.load())
-    .and(dotfiles.cp())
+  return {}
 }
 
 module.exports = Build
