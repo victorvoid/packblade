@@ -1,6 +1,4 @@
 const { CLITypes } = require('./adts.js')
-const Maybe = require('folktale/maybe');
-
 
 function checkParameters(input){
   const key = input ? `${input.charAt(0).toUpperCase()}${input.slice(1)}`: ''

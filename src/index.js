@@ -4,6 +4,7 @@ const meow = require('meow')
 const ora = require('ora');
 const updateNotifier = require('update-notifier')
 const Add = require('./add')
+const Build = require('./build')
 const { rejected } = require('folktale/concurrency/task');
 const { checkParameters } = require('./utils')
 
@@ -34,6 +35,8 @@ updateNotifier({ pkg: cli.pkg }).notify()
 const spinner = ora('Loading... \n').start();
 
 const app = checkParameters(cli.input[0]).matchWith({
+  Build,
+
   Add: () => Add(cli.input[1]),
 
   NotExist: () => rejected('An unexpected error occurred, you need to use:')

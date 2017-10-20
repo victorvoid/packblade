@@ -23,7 +23,8 @@ function Add(directory){
       return exist(directory)
         .and(template.load())
         .and(cp(directory))
-    }).getOrElse(rejected(`You need to pass the path as a parameter`))
+    })
+    .getOrElse(rejected(`You need to pass the path as a parameter`))
 }
 
 module.exports = Add
