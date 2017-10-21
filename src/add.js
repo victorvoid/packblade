@@ -1,5 +1,5 @@
 const fs = require('fs-extra')
-const template = require('./template')
+const { createDefaultsNames } = require('./template')
 const { fromNullable } = require('folktale/maybe');
 const { fromPromised, rejected, of } = require('folktale/concurrency/task');
 
@@ -7,7 +7,7 @@ const fsCopy = fromPromised(fs.copy)
 const pathExists = fromPromised(fs.pathExists)
 
 function cp(directory){
-  return fsCopy(directory, 'packblade/roles/my/files/')
+  return fsCopy(directory, 'packblade/roles/common/files/')
 }
 
 function exist(path){
@@ -21,7 +21,7 @@ function Add(directory){
   return fromNullable(directory)
     .map(() => {
       return exist(directory)
-        .and(template.load())
+        .and(createDefaultsNames(directory))
         .and(cp(directory))
     })
     .getOrElse(rejected(`You need to pass the path as a parameter`))
