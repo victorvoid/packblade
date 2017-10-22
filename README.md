@@ -21,12 +21,17 @@ which programs you want to add to the automation.
 ```console
 $ packblade --help
 
-    Usage:
-      $ packblade                Get yours files/dotfiles in current path and generates a role with files
-      $ packblade <appname>      Generates a role(with tasks to install) of the app
+    Usage: packblade <command>
+    Where <command> is one of:
+      install <appname>   Add a role(app) to the your package
+      add <foldername>    Add a file or folder to the your package
+      show                Show availables roles(Applications)
+      build               Generates its ready to use package
     Example:
-      $ packblade
-      $ packblade spotify
+      $ packblade install spotify
+      $ packblade add dotfiles
+      $ packblade build
+
 ```
 
 ## How to use the generated/ packblade folder
