@@ -1,8 +1,8 @@
 # packblade
 
-A generator to you create a Ansible Playbook to automate the installation of your apps and dotfiles.
+![](http://images6.fanpop.com/image/photos/34000000/Mariah-Wong-beyblade-34080439-500-375.jpg)
 
-![](https://github.com/victorvoid/packblade/blob/master/beyblade.jpg)
+A generator to you create a Ansible Playbook to automate the installation of your apps and dotfiles.
 
 Getting started
 ------------
@@ -18,15 +18,15 @@ working...
 You need to paste your dotfiles into a folder called `dotfiles/` and use the commands below to choose 
 which programs you want to add to the automation.
 
-```bash
+```console
+$ packblade --help
+
     Usage:
       $ packblade                Get yours files/dotfiles in current path and generates a role with files
       $ packblade <appname>      Generates a role(with tasks to install) of the app
-      $ packblade ls             Show availables roles(Applications)
     Example:
       $ packblade
       $ packblade spotify
-      $ packblade ls
 ```
 
 ## How to use the generated/ packblade folder
