@@ -1,17 +1,23 @@
 const config = require('./config')
 const template = require('./template')
-const Git = require("nodegit");
-const { fromPromised, rejected } = require('folktale/concurrency/task');
+const { Repository, Submodule } = require("nodegit");
+const { fromPromised, rejected, waitAll } = require('folktale/concurrency/task');
 
-const clone = fromPromised(Git.Clone)
+const init = fromPromised(Repository.init)
+const addSubmodule = fromPromised(Submodule.addSetup)
 
 function Build(){
   return config
     .read()
-    .map(roles => {
-      return clone(`https://github.com/victorvoid/packblade`, "./packblade/roles/")
-        .orElse(() => rejected('error in clone'))
+    .chain(roles => {
+      return init('./packblade', 0)
+        .chain(repository => waitAll(
+          roles.map(role => {
+            return addSubmodule(repository, `https://github.com/${role}.git`, `vendor/${role.split('/')[1]}`, 0)
+          })
+        ))
     })
+    .orElse((err) => rejected(err));
 }
 
 module.exports = Build
