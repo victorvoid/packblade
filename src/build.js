@@ -17,7 +17,6 @@ function Build(){
           })
         ))
     })
-    .orElse((err) => rejected(err));
 }
 
 module.exports = Build
