@@ -1,5 +1,7 @@
 # packblade
 
+[![Build Status](https://travis-ci.org/victorvoid/packblade.svg?branch=master)](https://travis-ci.org/victorvoid/packblade)
+
 ![](http://images6.fanpop.com/image/photos/34000000/Mariah-Wong-beyblade-34080439-500-375.jpg)
 
 A generator to you create an Ansible Playbook to automate the installation of your apps and dotfiles.
