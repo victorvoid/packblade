@@ -4,6 +4,7 @@ const meow = require('meow')
 const updateNotifier = require('update-notifier')
 const chalk = require('chalk');
 const Add = require('./add')
+const Install = require('./install')
 const Build = require('./build')
 const { rejected } = require('folktale/concurrency/task');
 const { checkParameters } = require('./utils')
@@ -13,7 +14,7 @@ const cli = meow({
   help: `
   Usage: packblade <command>
     Where <command> is one of:
-      install <appname>   Add a role(app) to the your package
+      install <user/repo> Add a role(app) to the your package as a githubuser/repositoryname
       add <foldername>    Add a file or folder to the your package
       show                Show availables roles(Applications)
       build               Generates its ready to use package
@@ -36,6 +37,8 @@ updateNotifier({ pkg: cli.pkg }).notify()
 const app = checkParameters(cli.input[0]).matchWith({
   Build,
 
+  Install: () => Install(cli.input[1]),
+
   Add: () => Add(cli.input[1]),
 
   NotExist: () => rejected('An unexpected error occurred, you need to use:')
@@ -45,7 +48,7 @@ app
   .run()
   .promise()
   .then(() => {
-    console.log(chalk.bold.green(`✔ Success! generated in the ./packblade/ `))
+    console.log(chalk.bold.green(`✔ Success!`))
   })
   .catch((errorMessage) => {
     console.log(chalk.bold.red(`✖ [ERROR] ${errorMessage}`))
