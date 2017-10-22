@@ -14,7 +14,7 @@ const cli = meow({
     Usage: packblade <command>
     Where <command> is one of:
       install <appname>   Add a role(app) to the your package
-      add     <foldername>  Add a file or folder to the your package
+      add <foldername>    Add a file or folder to the your package
       show                Show availables roles(Applications)
       build               Generates its ready to use package
     Example:

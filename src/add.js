@@ -12,18 +12,16 @@ function cp(directory){
 
 function exist(path){
   return pathExists(path)
-    .chain(exist => {
-      return exist ? of(exist) : rejected(`${path} not found`)
-    })
+    .chain(exist => exist ?  of(exist)
+           : /* otherwise */ rejected(`${path} not found`))
 }
 
 function Add(directory){
   return fromNullable(directory)
-    .map(() => {
-      return exist(directory)
-        .and(createDefaultsNames(directory))
-        .and(cp(directory))
-    })
+    .map(() =>
+         exist(directory)
+         .and(createDefaultsNames(directory))
+         .and(cp(directory)))
     .getOrElse(rejected(`You need to pass the path as a parameter`))
 }
 

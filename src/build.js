@@ -10,9 +10,7 @@ function Build(){
     .read()
     .map(roles => {
       return clone(`https://github.com/victorvoid/packblade`, "./packblade/roles/")
-        .orElse(() => {
-          return rejected('error in clone')
-      })
+        .orElse(() => rejected('error in clone'))
     })
 }
 

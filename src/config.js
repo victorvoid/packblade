@@ -5,12 +5,10 @@ const readJson = fromPromised(fs.readJson)
 
 function read(){
   return readJson('./packblade.json')
-    .chain(config => {
-      return 'roles' in config ? of(config.roles) : rejected('File invalid')
-    })
-    .orElse(() => {
-      return rejected(` Packblade: file not found: ./packblade.json`)
-    })
+    .chain(config =>
+           'roles' in config ? of(config.roles)
+           : /*  otherwise  */ rejected('File invalid'))
+    .orElse(() => rejected(` Packblade: file not found: ./packblade.json`))
 }
 
 module.exports = {

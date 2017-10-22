@@ -1,7 +1,6 @@
 const { CLITypes } = require('./adts.js')
 const { compose } = require('folktale/core/lambda');
 
-
 function toLowerCase(x) {
     return x.toLowerCase()
 }
