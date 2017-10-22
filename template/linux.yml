@@ -3,11 +3,11 @@
   vars_prompt:
     - name: "git_user_email"
       prompt: "what is your git email?"
-      default: "victor.0w3@gmail.com"
+      default: "myemail@gmail.com"
       private: no
     - name: "git_user_name"
       prompt: "what is your git user?"
-      default: "Victor Igor"
+      default: "Lorem Ipsum"
       private: no
 
   roles:
