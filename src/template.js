@@ -26,10 +26,16 @@ function createATemplate(directory){
 function createATask(directory){
   const tasks = [{
     name: `${directory} |  make ~/.config `,
-    file: 'path=~/.config state=directory'
+    file: {
+      path: '~/.config',
+      state: 'directory'
+    }
   }, {
     name: `${directory} | create backup directory`,
-    file: 'path=~/.backups state=directory'
+    file: {
+      path: '~/.backups',
+      state: 'directory'
+    }
   }, {
     name: `${directory} | check for non-symlink originals`,
     command: 'test -e ~/{{ item }} -a ! -L ~/{{ item }}',
@@ -39,11 +45,11 @@ function createATask(directory){
     changed_when: 'false'
   }, {
     name: `${directory} | backup originals`,
-    command: [
-      'mv ~/{{ item.0 }} ~/.backups/',
-      'creates=~/.backups/{{ item.0 }}',
-      'removes=~/{{ item.0 }}'
-    ],
+    command: "mv /{{ item.0 }} /.backups/",
+    args: {
+      creates: "~/.backups/{{ item.0 }}",
+      removes: "~/{{ item.0 }}"
+    },
     with_together: [
       '{{fnames}}',
       '{{original_check.results}}'
@@ -54,7 +60,11 @@ function createATask(directory){
     }
   }, {
     name: `${directory} | create symlinks`,
-    file: `src={{ ansible_env.PWD }}/roles/${directory}/files/{{ item }} path= ~/{{ item }} state=link force=yes`,
+    file: {
+      path: "src={{ ansible_env.PWD }}/roles/${directory}/files/{{ item }}",
+      state: "link",
+      force: "yes"
+    },
     with_items: '{{fnames}}'
   }]
 
