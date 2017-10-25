@@ -14,7 +14,7 @@ const cli = meow({
   help: `
   Usage: packblade <command>
     Where <command> is one of:
-      install <user/repo> Add a role(app) to the your package as a githubuser/repositoryname
+      install <user/repo> Install a role(app)
       add <foldername>    Add a file or folder to the your package
       show                Show availables roles(Applications)
       build               Generates its ready to use package
