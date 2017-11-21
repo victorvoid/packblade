@@ -13,9 +13,6 @@
   roles:
     - { role: dotfiles, tags: ['dotfiles'] }
     - { role: defaults }
-    - { role: spotify, tags: ['spotify'] }
-    - { role: telegram, tags: ['telegram'] }
-    - { role: docker, tags: ['docker']}
   vars:
     command_t_bundle: ext.so
     use_local_vim_dir: true
