@@ -7,7 +7,7 @@ const fsWrite = fromPromised(fs.outputFile)
 const DEFAULTS_ROLES = ['ansible/ansible', 'pypa/virtualenv']
 
 function read(){
-  return readJson('./packblade.json')
+  return readJson('./packblade/packblade.json')
     .chain(config =>
            'roles' in config ? of(config.roles)
            : /*  otherwise  */ rejected('File invalid'))
@@ -15,7 +15,7 @@ function read(){
 }
 
 function createConfig(){
-  return fsWrite('./packblade.json', JSON.stringify({
+  return fsWrite('./packblade/packblade.json', JSON.stringify({
     roles: DEFAULTS_ROLES
   }, null, 4))
 }
