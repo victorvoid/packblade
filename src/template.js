@@ -23,6 +23,35 @@ function createATemplate(directory){
   return createDefaults(directory).and(createATask(directory))
 }
 
+function createLinuxPlayBook(roles){
+
+  const linux = [{
+    hosts: 'localhost',
+    vars_prompt: [{
+      name: 'git_user_email',
+      prompt: 'what is your git email',
+      default: 'myemail@gmail.com',
+      private: 'no'
+    }, {
+      name: 'git_user_name',
+      prompt: 'what is your git user ?',
+      default: 'Lorem ipsum',
+      private: 'no'
+    }],
+
+    roles: roles.map(role => ({ role })),
+
+    vars: {
+      command_t_bundle: 'ext.so',
+      use_local_vim_dir: true
+    }
+  }]
+
+  const playbookYAML = dump(linux)
+
+  return fsWrite('packblade/linux.yml', playbookYAML)
+}
+
 function createATask(directory){
   const tasks = [{
     name: `${directory} |  make ~/.config `,
@@ -77,5 +106,6 @@ module.exports = {
   load,
   createATask,
   createDefaults,
-  createATemplate
+  createATemplate,
+  createLinuxPlayBook
 }
