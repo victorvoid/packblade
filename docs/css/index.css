@@ -1,0 +1,95 @@
+@import url('https://fonts.googleapis.com/css?family=Lato:300,400,900');
+
+body, html {
+    margin: 0;
+    padding: 0;
+    font-family: 'Lato', sans-serif;
+    line-height: 1.5;
+}
+
+.header {
+    background: #2d343a;
+    box-shadow: 0 0px 1px rgba(0,0,0,0.5);
+}
+
+.header-navbar {
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.header-navbar__logo {
+    float: left;
+    margin: 16px 80px 16px 0;
+    text-decoration: none;
+    color: #FFF;
+    font-size: 20px;
+    font-weight: 300;
+}
+
+.header-list {
+    padding: 0;
+    margin: 0;
+    display: flex;
+}
+
+.header-list__item {
+    list-style: none;
+    padding: 20px 15px;
+}
+
+.header-list__item a {
+    text-transform: uppercase;
+    text-decoration: none;
+    color: rgba(255,255,255,0.7);
+    padding-top: 5px;
+    padding-bottom: 5px;
+    transition: all .2s;
+}
+
+.header-list__item a:hover {
+    color: rgba(255,255,255,0.8);
+}
+
+.content-apresentation {
+    min-height: 350px;
+    background: #384048;
+    padding: 25px;
+}
+
+.content-apresentation h1 {
+    margin: 0;
+    font-size: 32px;
+    font-weight: 300;
+    color: #FFF;
+}
+
+.install-instructions {
+    flex-grow: 0;
+    align-self: center;
+    margin-top: 34px;
+    font-family: "Source Code Pro", monospace;
+    max-width: 386px;
+    box-shadow: 2px 3px 9px #2e343a;
+}
+
+.install-instructions code {
+    font-size: 18px;
+    color: #7f8c8d;
+    display: block;
+    padding: 20px 50px;
+    background: rgba(46, 52, 58, 0.55);
+}
+
+.install-instructions .shell {
+    color: #FFF;
+}
+
+.install-instructions .command {
+    color: #FFF;
+    font-weight: bold;
+}
+
+.install-instructions .name {
+    color: #FFF;
+    font-weight: bold;
+}
