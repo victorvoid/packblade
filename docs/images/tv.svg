@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" aria-labelledby="title"
+aria-describedby="desc" role="img" xmlns:xlink="http://www.w3.org/1999/xlink">
+  <title>iMac Screen</title>
+  <desc>A line styled icon from Orion Icon Library.</desc>
+  <path data-name="layer2"
+  fill="none" stroke="#2e343a" stroke-linecap="round" stroke-linejoin="miter"
+  stroke-width="2" d="M22 60h20M32 50v10m30-20V6a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2v34"></path>
+  <path data-name="layer1" d="M2 40v8a2 2 0 0 0 2 2h56a2 2 0 0 0 2-2v-8z"
+  fill="none" stroke="#2e343a" stroke-linecap="round" stroke-linejoin="miter"
+  stroke-width="2"></path>
+</svg>
