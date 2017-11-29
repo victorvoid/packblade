@@ -16,7 +16,7 @@ function createDefaults(directory){
   return fsReadDir(directory)
     .chain(fnames => fnames.length > 0 ? of(dump({ fnames }))
            :      /*  otherwise  */      rejected(`${directory} folder is empty`))
-    .chain(yaml => fsWrite('packblade/roles/common/defaults/main.yml', yaml))
+    .chain(yaml => fsWrite(`packblade/roles/${directory}/defaults/main.yml`, yaml))
 }
 
 function createATemplate(directory){
@@ -90,7 +90,7 @@ function createATask(directory){
   }, {
     name: `${directory} | create symlinks`,
     file: {
-      path: "src={{ ansible_env.PWD }}/roles/${directory}/files/{{ item }}",
+      path: `src={{ ansible_env.PWD }}/roles/${directory}/files/{{ item }}`,
       state: "link",
       force: "yes"
     },
@@ -99,7 +99,7 @@ function createATask(directory){
 
   const tasksYAML = dump(tasks)
 
-  return fsWrite('packblade/roles/common/tasks/main.yml', tasksYAML)
+  return fsWrite(`packblade/roles/${directory}/tasks/main.yml`, tasksYAML)
 }
 
 module.exports = {

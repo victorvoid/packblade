@@ -10,10 +10,9 @@ function Install(repository){
     .map(() =>
          config
          .read()
-         .chain(config =>
-           fsWrite('./packblade.json', JSON.stringify({
-             roles: [repository, ...config]
-           }, null, 4)))
+         .chain(config => {
+           return fsWrite('./packblade/packblade.json', JSON.stringify({...config, roles: [...config.roles, repository]}, null, 4))
+         })
          .orElse(() => fsWrite('./packblade.json', JSON.stringify({ roles: [repository] }, null, 4))))
     .getOrElse(rejected(`You need to pass the githubuser/repositoryname as a parameter`))
 }

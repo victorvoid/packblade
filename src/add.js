@@ -7,7 +7,7 @@ const fsCopy = fromPromised(fs.copy)
 const pathExists = fromPromised(fs.pathExists)
 
 function cp(directory){
-  return fsCopy(directory, 'packblade/roles/common/files/')
+  return fsCopy(directory, `packblade/roles/${directory}/files/`)
 }
 
 function exist(path){

@@ -12,13 +12,13 @@ function Build(){
   return template.load().and(
     config
       .read()
-      .chain(roles => init('./packblade', 0)
+      .chain(({ vendor }) => init('./packblade', 0)
           .chain(repository => waitAll(
-            roles.map(role => {
+            vendor.map( v => {
               return addSubmodule(
                 repository,
-                `https://github.com/${role}.git`,
-                `vendor/${role.split('/')[1]}`, 0
+                `https://github.com/${v}.git`,
+                `vendor/${v.split('/')[1]}`, 0
               ).orElse(error => of(error))
             })
           ))
