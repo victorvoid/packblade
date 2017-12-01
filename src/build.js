@@ -8,22 +8,34 @@ const init = fromPromised(Repository.init)
 const addSubmodule = fromPromised(Submodule.addSetup)
 const fsCopy = fromPromised(fs.copy)
 
-function Build(){
-  return template.load().and(
-    config
-      .read()
-      .chain(({ vendor }) => init('./packblade', 0)
-          .chain(repository => waitAll(
-            vendor.map( v => {
-              return addSubmodule(
-                repository,
-                `https://github.com/${v}.git`,
-                `vendor/${v.split('/')[1]}`, 0
-              ).orElse(error => of(error))
-            })
-          ))
-      )
+const GITHUB_URL = 'https://github.com/'
+
+function createSubmodule(util, repository){
+  return addSubmodule(repository,
+                      `${GITHUB_URL}${util}.git`,
+                      `vendor/${util.split('/')[1]}`, 0)
+    .orElse(error => of(error))
+}
+
+function createAllSubmodules(utils, repository){
+  return waitAll(
+    utils.map(util => createSubmodule(util, repository))
   )
+}
+
+function createRepository(utils){
+  return init('./packblade', 0)
+    .chain(repository => createAllSubmodules(utils, repository))
+}
+
+function prepareRepository(){
+  return config
+    .read()
+    .chain(({ utils }) => createRepository(utils))
+}
+
+function Build(){
+  return template.load().and(prepareRepository())
 }
 
 module.exports = Build
