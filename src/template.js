@@ -9,7 +9,7 @@ const fsReadDir = fromNodeback(require('fs').readdir)
 
 function load(){
   return fsCopy(path.resolve(__dirname, '../template/'), 'packblade/')
-    .orElse(() => rejected('An unexpected error occurred'))
+    .orElse(() => rejected('An unexpected error occurred when is loaded template'))
 }
 
 function createDefaults(directory){
@@ -24,7 +24,6 @@ function createATemplate(directory){
 }
 
 function createLinuxPlayBook(roles){
-
   const linux = [{
     hosts: 'localhost',
     vars_prompt: [{
@@ -46,10 +45,7 @@ function createLinuxPlayBook(roles){
       use_local_vim_dir: true
     }
   }]
-
-  const playbookYAML = dump(linux)
-
-  return fsWrite('packblade/linux.yml', playbookYAML)
+  return fsWrite('packblade/linux.yml', dump(linux))
 }
 
 function createATask(directory){

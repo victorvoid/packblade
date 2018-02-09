@@ -13,7 +13,10 @@ function read(){
            ('utils' in config) || ('roles' in config) ?
            of(config) :
            rejected('File invalid'))
-    .orElse(() => createConfig().map(() => ({ utils: DEFAULTS_UTILS, roles: DEFAULTS_ROLES })))
+    .orElse(() => createConfig()
+            .map(() =>
+                 ({ utils: DEFAULTS_UTILS,
+                    roles: DEFAULTS_ROLES })))
 }
 
 function createConfig(){
