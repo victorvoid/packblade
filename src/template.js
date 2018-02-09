@@ -1,11 +1,16 @@
-const fs = require('fs-extra')
 const path = require('path')
-const { dump } = require('js-yaml')
-const { fromPromised, rejected, of, fromNodeback } = require('folktale/concurrency/task');
+const fs = require('fs-extra')
+const {
+  fromPromised,
+  rejected,
+  of,
+  fromNodeback
+} = require('folktale/concurrency/task');
 
 const fsCopy = fromPromised(fs.copy)
 const fsWrite = fromPromised(fs.outputFile)
 const fsReadDir = fromNodeback(require('fs').readdir)
+const { dump } = require('js-yaml')
 
 function load(){
   return fsCopy(path.resolve(__dirname, '../template/'), 'packblade/')
@@ -21,6 +26,20 @@ function createDefaults(directory){
 
 function createATemplate(directory){
   return createDefaults(directory).and(createATask(directory))
+}
+
+function createMacOSPlayBook(roles){
+  const macos = [{
+    hosts: 'localhost',
+    roles: roles.map(role => ({ role })),
+    vars: {
+      command_t_bundle: 'ext.so',
+      use_local_vim_dir: true,
+      install_masochist_vim_dependencies: true,
+      install_nvim_dependencies: true
+    }
+  }]
+  return fsWrite('packblade/macos.yml', dump(macos))
 }
 
 function createLinuxPlayBook(roles){
@@ -103,5 +122,6 @@ module.exports = {
   createATask,
   createDefaults,
   createATemplate,
+  createMacOSPlayBook,
   createLinuxPlayBook
 }

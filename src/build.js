@@ -36,7 +36,9 @@ function prepareRepository(){
   return config
     .read()
     .chain(({ utils, roles }) =>
-           createRepository(utils).and(template.createLinuxPlayBook(roles)))
+           createRepository(utils)
+           .and(template.createLinuxPlayBook(roles))
+           .and(template.createMacOSPlayBook(roles)))
 }
 
 function Build(){
