@@ -12,7 +12,7 @@ function read(){
     .chain(config =>
            ('utils' in config) || ('roles' in config) ?
            of(config) :
-           rejected('File invalid'))
+           rejected('packblade.json invalid, check all fields.'))
     .orElse(() => createConfig()
             .map(() =>
                  ({ utils: DEFAULTS_UTILS,

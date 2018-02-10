@@ -24,8 +24,8 @@ function createDefaults(directory){
     .chain(yaml => fsWrite(`packblade/roles/${directory}/defaults/main.yml`, yaml))
 }
 
-function createATemplate(directory){
-  return createDefaults(directory).and(createATask(directory))
+function createATemplate(directory, dirWhereSaved){
+  return createDefaults(directory).and(createATask(directory, dirWhereSaved))
 }
 
 function createMacOSPlayBook(roles){
@@ -67,22 +67,23 @@ function createLinuxPlayBook(roles){
   return fsWrite('packblade/linux.yml', dump(linux))
 }
 
-function createATask(directory){
+function createATask(directory, dirWhereSaved){
+  const directoryToSave = dirWhereSaved ? dirWhereSaved : '~/'
   const tasks = [{
     name: `${directory} |  make ~/.config `,
     file: {
-      path: '~/.config',
+      path: `${directoryToSave}.config`,
       state: 'directory'
     }
   }, {
     name: `${directory} | create backup directory`,
     file: {
-      path: '~/.backups',
+      path: `${directoryToSave}.backups`,
       state: 'directory'
     }
   }, {
     name: `${directory} | check for non-symlink originals`,
-    command: 'test -e ~/{{ item }} -a ! -L ~/{{ item }}',
+    command: `test -e ${directoryToSave}{{ item }} -a ! -L ${directoryToSave}{{ item }}`,
     failed_when: 'original_check.rc > 1',
     register: 'original_check',
     with_items: '{{fnames}}',
@@ -91,8 +92,8 @@ function createATask(directory){
     name: `${directory} | backup originals`,
     command: "mv /{{ item.0 }} /.backups/",
     args: {
-      creates: "~/.backups/{{ item.0 }}",
-      removes: "~/{{ item.0 }}"
+      creates: `${directoryToSave}.backups/{{ item.0 }}`,
+      removes: `${directoryToSave}{{ item.0 }}`
     },
     with_together: [
       '{{fnames}}',

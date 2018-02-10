@@ -16,6 +16,7 @@ const cli = meow({
     Where <command> is one of:
       install <user/repo> Install a role(app)
       add <foldername>    Add a file or folder to the your package
+          /path/to/be/saved "directory where the file will be saved"
       show                Show availables roles(Applications)
       build               Generates its ready to use package
     Example:
@@ -39,7 +40,7 @@ const app = checkParameters(cli.input[0]).matchWith({
 
   Install: () => Install(cli.input[1]),
 
-  Add: () => Add(cli.input[1]),
+  Add: () => Add(cli.input[1], cli.input[2]),
 
   NotExist: () => rejected('An unexpected error occurred, you need to use:')
 })
